@@ -1,20 +1,7 @@
-extends Node2D
-
-var entities = {} # Entity -> Vector2
-var positions = {} # Vector2 -> Entity
+extends "res://grid.gd"
 
 func _ready():
-	OS.window_fullscreen = true
-
-func update_entity_position(entity, pos):
-	if entity in entities:
-		positions.erase(entities[entity])
-	entities[entity] = pos
-	assert(not (pos in positions))
-	positions[pos] = entity
-
-func get_entity_at_position(pos):
-	if pos in positions:
-		return positions[pos]
-	else:
-		return null
+	#OS.window_fullscreen = true
+	OS.window_borderless = true
+	OS.window_size = OS.get_screen_size()
+	OS.window_position = OS.get_screen_position()

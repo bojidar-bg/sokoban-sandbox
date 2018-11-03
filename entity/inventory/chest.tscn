@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://entity/entity.tscn" type="PackedScene" id=1]
+[ext_resource path="res://entity/inventory/chest.gd" type="Script" id=2]
+[ext_resource path="res://entity/inventory/inventories.png" type="Texture" id=3]
+[ext_resource path="res://entity/inventory/inventory.gd" type="Script" id=4]
+[ext_resource path="res://entity/inventory/grid.png" type="Texture" id=5]
+
+[node name="chest" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+
+[node name="frame" parent="." index="0"]
+
+frame = 1
+
+[node name="inventories" type="Sprite" parent="moving" index="0"]
+
+texture = ExtResource( 3 )
+hframes = 6
+_sections_unfolded = [ "Animation" ]
+
+[node name="inventory" type="Node2D" parent="." index="3"]
+
+visible = false
+z_index = 5
+script = ExtResource( 4 )
+_sections_unfolded = [ "Z Index" ]
+rect = Rect2( -3, -2, 6, 4 )
+
+[node name="background" type="Node2D" parent="inventory" index="0"]
+
+z_index = -2
+_sections_unfolded = [ "Z Index" ]
+
+[node name="texture_rect" type="TextureRect" parent="inventory/background" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 5 )
+stretch_mode = 2
+
+

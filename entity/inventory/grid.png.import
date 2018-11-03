@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/entity_overlay.png-8d77bec8103719fd1c9b26f595a762ac.stex"
+path="res://.import/grid.png-8ea1481411c9f08a29b2511b4f9471a1.stex"
 
 [deps]
 
-source_file="res://entity/entity_overlay.png"
-dest_files=[ "res://.import/entity_overlay.png-8d77bec8103719fd1c9b26f595a762ac.stex" ]
+source_file="res://entity/inventory/grid.png"
+dest_files=[ "res://.import/grid.png-8ea1481411c9f08a29b2511b4f9471a1.stex" ]
 
 [params]
 

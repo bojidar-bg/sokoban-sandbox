@@ -8,17 +8,20 @@
 [node name="player" instance=ExtResource( 1 )]
 
 script = ExtResource( 2 )
+mass = 1
 strength = 2
 
-[node name="entity_overlay" parent="." index="0"]
+[node name="frame" parent="." index="0"]
 
-frame = 0
+frame = 3
 
 [node name="player" type="Sprite" parent="moving" index="0"]
 
 texture = ExtResource( 3 )
 
-[node name="camera_2d" type="Camera2D" parent="moving" index="1"]
+[node name="camera_2d" type="Camera2D" parent="moving" index="1" groups=[
+"cameras",
+]]
 
 anchor_mode = 1
 rotating = false

@@ -1,18 +1,18 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://entity/entity.gd" type="Script" id=1]
-[ext_resource path="res://entity/entity_overlay.png" type="Texture" id=2]
+[ext_resource path="res://entity/entity_frame.png" type="Texture" id=2]
 
 [node name="entity" type="Node2D"]
 
 script = ExtResource( 1 )
+mass = 1
 
-[node name="entity_overlay" type="Sprite" parent="." index="0"]
+[node name="frame" type="Sprite" parent="." index="0"]
 
 z_index = -1
 texture = ExtResource( 2 )
-hframes = 4
-frame = 1
+hframes = 6
 _sections_unfolded = [ "Animation", "Z Index" ]
 
 [node name="moving" type="Node2D" parent="." index="1"]
