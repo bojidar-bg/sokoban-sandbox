@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://entity/entity.tscn" type="PackedScene" id=1]
+[ext_resource path="res://entity/inventory/inventory_entity.gd" type="Script" id=2]
+[ext_resource path="res://entity/inventory/inventory_grid.gd" type="Script" id=3]
+[ext_resource path="res://entity/inventory/grid.png" type="Texture" id=4]
+[ext_resource path="res://entity/inventory/grid_frame.png" type="Texture" id=5]
+
+[node name="inventory_entity" index="0" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+
+[node name="frame" parent="." index="0"]
+
+frame = 1
+
+[node name="inventory" type="Node2D" parent="." index="3"]
+
+visible = false
+z_index = 5
+script = ExtResource( 3 )
+_sections_unfolded = [ "Z Index" ]
+rect = Rect2( -2, -2, 4, 4 )
+
+[node name="background" type="Node2D" parent="inventory" index="0"]
+
+z_index = -2
+_sections_unfolded = [ "Z Index" ]
+
+[node name="texture_rect" type="NinePatchRect" parent="inventory/background" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 42.0
+margin_bottom = 42.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 4 )
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+_sections_unfolded = [ "Axis Stretch" ]
+
+[node name="display_frame" type="Sprite" parent="." index="4"]
+
+visible = false
+z_index = 1
+texture = ExtResource( 5 )
+_sections_unfolded = [ "Z Index" ]
+
+

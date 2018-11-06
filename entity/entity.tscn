@@ -3,7 +3,7 @@
 [ext_resource path="res://entity/entity.gd" type="Script" id=1]
 [ext_resource path="res://entity/entity_frame.png" type="Texture" id=2]
 
-[node name="entity" type="Node2D"]
+[node name="entity" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 mass = 1
@@ -20,7 +20,7 @@ _sections_unfolded = [ "Animation", "Z Index" ]
 [node name="tween" type="Tween" parent="." index="2"]
 
 repeat = false
-playback_process_mode = 0
+playback_process_mode = 1
 playback_speed = 1.0
 playback/active = false
 playback/repeat = false

@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://entity/inventory/inventory_entity.tscn" type="PackedScene" id=1]
+[ext_resource path="res://entity/inventory/crafting_table.gd" type="Script" id=2]
+[ext_resource path="res://entity/inventory/inventories.png" type="Texture" id=3]
+[ext_resource path="res://entity/inventory/inventory_grid.gd" type="Script" id=4]
+[ext_resource path="res://entity/inventory/grid.png" type="Texture" id=5]
+
+[node name="crafting_table" index="0" instance=ExtResource( 1 )]
+
+script = ExtResource( 2 )
+
+[node name="inventories" type="Sprite" parent="moving" index="0"]
+
+texture = ExtResource( 3 )
+hframes = 6
+frame = 1
+_sections_unfolded = [ "Animation" ]
+
+[node name="result_inventory" type="Node2D" parent="." index="5"]
+
+visible = false
+script = ExtResource( 4 )
+rect = Rect2( 0, 0, 0, 0 )
+
+[node name="background" type="Node2D" parent="result_inventory" index="0"]
+
+[node name="texture_rect" type="NinePatchRect" parent="result_inventory/background" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 42.0
+margin_bottom = 42.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 5 )
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+
