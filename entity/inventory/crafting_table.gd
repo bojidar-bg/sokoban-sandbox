@@ -7,25 +7,24 @@ func move(offset, strength = 0, flags = MOVE_DEFAULT):
 	if flags & MOVE_INTERACT:
 		_update_pending()
 		if pending_entity != null:
-			for i in range(3):
-				for j in range(3):
-					var entity = inventory.get_entity_at_position(Vector2(j - 1, i - 1))
+			for i in range(inventory.rect.position.y, inventory.rect.end.y + 1):
+				for j in range(inventory.rect.position.x, inventory.rect.end.x + 1):
+					var entity = inventory.get_entity_at_position(Vector2(j, i))
 					if entity != null:
 						entity.free()
-			var put_inside = true
 			
-			if flags & MOVE_PUSH:
-				put_inside = not pending_entity.move(offset, strength, MOVE_PUSH)
+			var leftover_strength = pending_entity.move(offset, strength, flags & (~MOVE_INTERACT))
 			
-			if put_inside:
+			if leftover_strength < 0:
 				result_inventory.remove_child(pending_entity)
 				inventory.add_child(pending_entity)
 				inventory.update_entity_position(pending_entity, pending_entity.get_grid_position(), offset)
 				pending_entity = null
-				return true
+				return strength
 			else:
+				strength = leftover_strength
 				pending_entity = null
-		return false
+		return -INF
 	return .move(offset, strength, flags & (~MOVE_INTERACT))
 
 func update_inside_camera_view():
@@ -33,7 +32,7 @@ func update_inside_camera_view():
 	.update_inside_camera_view()
 
 func update_outside_camera_view():
-	if Input.is_action_pressed("mod_interact") and should_show_inventory():
+	if Player.get_input_movement_flags() & MOVE_INTERACT and should_show_inventory():
 		_update_pending()
 		display_frame.visible = false
 		inventory.visible = false
@@ -60,26 +59,36 @@ func _match_recipe():
 	var rows = {}
 	var cols = {}
 	
-	for i in range(3):
-		for j in range(3):
-			var entity = inventory.get_entity_at_position(Vector2(j - 1, i - 1))
+	for i in range(inventory.rect.position.y, inventory.rect.end.y + 1):
+		for j in range(inventory.rect.position.x, inventory.rect.end.x + 1):
+			var entity = inventory.get_entity_at_position(Vector2(j, i))
 			if entity != null:
 				cols[i] = true
 				rows[j] = true
 	
-	if cols.has(0) and cols.has(2):
-		cols[1] = true
-	if rows.has(0) and rows.has(2):
-		rows[1] = true
+	var previous_i = null
+	for i in range(inventory.rect.position.y, inventory.rect.end.y + 1):
+		if cols.has(i):
+			if previous_i != null:
+				for x in range(previous_i, i):
+					cols[x] = true
+			previous_i = i
+	var previous_j = null
+	for j in range(inventory.rect.position.x, inventory.rect.end.x + 1):
+		if rows.has(j):
+			if previous_j != null:
+				for x in range(previous_j, j):
+					rows[x] = true
+			previous_j = j
 	
 	var recipe_string = ""
-	for i in range(3): if cols.has(i):
+	for i in range(inventory.rect.position.y, inventory.rect.end.y + 1): if cols.has(i):
 		if recipe_string != "":
 			recipe_string += " |"
-		for j in range(3): if rows.has(j):
+		for j in range(inventory.rect.position.x, inventory.rect.end.y + 1): if rows.has(j):
 			if recipe_string != "":
 				recipe_string += " "
-			var entity = inventory.get_entity_at_position(Vector2(j - 1, i - 1))
+			var entity = inventory.get_entity_at_position(Vector2(j, i))
 			recipe_string += entity.get_resource_name() if entity != null else "_"
 	
 	var recipes = {

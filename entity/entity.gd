@@ -3,9 +3,10 @@ extends Node2D
 const GRID_SIZE = Vector2(20, 20)
 
 enum {
-	MOVE_PUSH = 1 << 0
-	MOVE_ENTER = 1 << 1
-	MOVE_INTERACT = 1 << 2
+	MOVE_SELF = 1 << 0
+	MOVE_PUSH = 1 << 1
+	MOVE_ENTER = 1 << 2
+	MOVE_INTERACT = 1 << 3
 }
 const MOVE_DEFAULT = MOVE_PUSH | MOVE_ENTER
 
@@ -30,24 +31,30 @@ func get_mass():
 	return mass
 
 func move(offset, strength = mass, flags = MOVE_DEFAULT): # -> bool (could move)
-	strength -= get_mass()
 	if offset.length_squared() < 0.01:
-		return true
+		return strength
+	if _moving:
+		return -INF
 	
-	if _moving or strength < 0:
-		return false
+	if not (flags & MOVE_SELF):
+		if flags & MOVE_PUSH:
+			strength -= get_mass()
+			if strength < 0: return strength
+		else:
+			return -INF
 	
-	var to_push = get_parent().get_entity_at_position(get_grid_position() + offset)
-	if to_push != null:
-		if not (bool(flags & MOVE_PUSH) and to_push.move(offset, strength, flags)):
-			return false # Likely not enough strength
+	var next_entity = get_parent().get_entity_at_position(get_grid_position() + offset)
+	if next_entity != null:
+		strength = next_entity.move(offset, strength, flags & (~MOVE_SELF))
+		if strength < 0: return strength
 	
+	# Yay, we actually can do this!
 	position += offset * GRID_SIZE
 	get_parent().update_entity_position(self, get_grid_position(), offset)
 	
 	animate_move(offset)
 	
-	return true
+	return strength
 
 func animate_move(offset):
 	if _moving:

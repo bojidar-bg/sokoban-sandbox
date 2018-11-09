@@ -1,5 +1,6 @@
 extends "res://entity/entity.gd"
 
+const Player = preload("res://player/player.gd")
 onready var inventory = $inventory
 onready var display_frame = $display_frame
 var is_camera_inside = false
@@ -13,16 +14,12 @@ func get_mass():
 
 func move(offset, strength = 0, flags = MOVE_DEFAULT):
 	if flags & MOVE_ENTER and get_parent().allows_subgrids():
-		var to_push = inventory.get_entity_at_position(inventory.get_inside_position(offset))
-		if to_push != null:
-			if flags & MOVE_PUSH:
-				if to_push.move(offset, strength, flags):
-					return true
-				# ! no else here
-			else:
-				return false
+		var next_entity = inventory.get_entity_at_position(inventory.get_inside_position(offset))
+		if next_entity != null:
+			strength = next_entity.move(offset, strength, flags)
+			return strength
 		else:
-			return true
+			return strength
 	return .move(offset, strength, flags & (~MOVE_ENTER))
 
 func move_into(entity, offset):
@@ -70,7 +67,7 @@ func should_show_inventory():
 		get_parent() == _get_active_camera().get_node("../../..") # HAACK
 		and get_parent().allows_subgrids()
 		and offset.length_squared() < 2
-		and not Input.is_action_pressed("mod_push")
+		and Player.get_input_movement_flags() & MOVE_ENTER
 	)
 
 func update_outside_camera_view():

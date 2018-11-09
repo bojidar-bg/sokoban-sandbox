@@ -9,22 +9,39 @@
 script/source = "extends \"res://entity/entity.gd\"
 
 var general = Vector2()
+const directions = [
+	Vector2(1, 2),
+	Vector2(1, -2),
+	Vector2(-1, -2),
+	Vector2(-1, -2),
+	Vector2(2, 1),
+	Vector2(2, -1),
+	Vector2(-2, -1),
+	Vector2(-2, -1),
+]
+
+func _ready():
+	movement_time *= 6
 
 func _physics_process(delta):
 	if !_moving:
-		general = (general + 6 * Vector2(randf() - 0.5, randf() - 0.5)).normalized()
-		if abs(general.x) > abs(general.y):
-			move(Vector2(sign(general.x), 0), 1)
-		else:
-			move(Vector2(0, sign(general.y)), 1)"
+		general = (general + 3 * Vector2(randf() - 0.5, randf() - 0.5)).normalized()
+		var best = null
+		var best_distance_sq = null
+		for direction in directions:
+			var distance_sq = general.distance_squared_to(direction)
+			if best == null or best_distance_sq > distance_sq:
+				best = direction
+				best_distance_sq = distance_sq
+		move(best, INF)"
 
 [node name="random" instance=ExtResource( 1 )]
 
 script = SubResource( 1 )
 
-[node name="entity_overlay" parent="." index="0"]
+[node name="frame" parent="." index="0"]
 
-frame = 2
+frame = 4
 
 [node name="sprite" type="Sprite" parent="moving" index="0"]
 
@@ -48,7 +65,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "XxRealPlayerXx"
+text = "Horse"
 align = 1
 percent_visible = 1.0
 lines_skipped = 0
