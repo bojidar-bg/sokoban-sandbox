@@ -20,6 +20,7 @@ func move(offset, strength = 0, flags = MOVE_DEFAULT):
 			if put_inside:
 				result_inventory.remove_child(pending_entity)
 				inventory.add_child(pending_entity)
+				inventory.update_entity_position(pending_entity, pending_entity.get_grid_position(), offset)
 				pending_entity = null
 				return true
 			else:

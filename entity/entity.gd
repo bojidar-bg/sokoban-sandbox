@@ -12,7 +12,6 @@ const MOVE_DEFAULT = MOVE_PUSH | MOVE_ENTER
 var _moving = false
 var movement_time = 0.2 # s
 onready var tween = $tween
-onready var previous_global_position = global_position
 export var mass = 1
 
 func _ready():
@@ -43,26 +42,20 @@ func move(offset, strength = mass, flags = MOVE_DEFAULT): # -> bool (could move)
 		if not (bool(flags & MOVE_PUSH) and to_push.move(offset, strength, flags)):
 			return false # Likely not enough strength
 	
-	move_nocheck(offset)
+	position += offset * GRID_SIZE
+	get_parent().update_entity_position(self, get_grid_position(), offset)
+	
+	animate_move(offset)
 	
 	return true
 
-func move_nocheck(offset):
-	if not _moving:
-		previous_global_position = global_position
-	
-	position += offset * GRID_SIZE
-	
-	var was_moving = _moving
+func animate_move(offset):
+	if _moving:
+		return
 	_moving = true
 	
-	get_parent().update_entity_position(self, get_grid_position(), offset)
-	
-	if was_moving:
-		return
-	
 	tween.remove_all()
-	$moving.global_position = previous_global_position
+	$moving.position = -offset * GRID_SIZE
 	tween.interpolate_property(
 		$moving, "position",
 		$moving.position, Vector2(),
@@ -70,7 +63,6 @@ func move_nocheck(offset):
 	tween.start()
 	
 	yield(tween, "tween_completed")
-	
-	previous_global_position = global_position
+	tween.remove_all()
 	
 	_moving = false

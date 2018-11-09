@@ -52,3 +52,6 @@ func get_total_mass():
 	for entity in entities:
 		mass += entity.get_mass()
 	return mass
+
+func allows_subgrids():
+	return false
