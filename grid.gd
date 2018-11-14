@@ -11,7 +11,6 @@ func update_entity_position(entity, pos, offset):
 	
 	if pos in positions:
 		if entity != positions[pos]:
-			assert(allows_subgrids())
 			positions[pos].move_into(entity, offset)
 	else:
 		entities[entity] = pos

@@ -2,7 +2,7 @@ extends "res://entity/entity.gd"
 
 export var strength = 2
 var last_horizontal = false
-var items = {}
+onready var item = get_node("moving/item") if has_node("moving/item") else null
 
 func _physics_process(delta):
 	if not _moving:
@@ -30,24 +30,28 @@ func _physics_process(delta):
 		$moving/overlay/label.text = str(get_grid_position())
 
 func move(offset, strength = 0, flags = MOVE_DEFAULT):
-	for item in items:
+	if item:
 		strength = item.pre_move(self, offset, strength, flags)
 		if strength < 0: return strength
 	
 	strength = .move(offset, strength, flags)
 	if strength < 0: return strength
 	
-	for item in items:
+	if item:
 		strength = item.post_move(self, offset, strength, flags)
 		if strength < 0: return strength
 	
 	return strength
 
-func register_item(item):
-	items[item] = true
-
-func unregister_item(item):
-	items.erase(item)
+func replace_item(new_item):
+	if item:
+		item.drop(self)
+		item.queue_free()
+	
+	item = new_item
+	
+	if item:
+		$moving.add_child(item)
 
 static func get_input_movement_flags():
 	if Input.is_action_pressed("mod_push") and Input.is_action_pressed("mod_interact"):

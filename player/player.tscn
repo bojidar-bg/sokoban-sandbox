@@ -6,10 +6,10 @@
 [ext_resource path="res://pixelfont.tres" type="DynamicFont" id=4]
 [ext_resource path="res://player/item/pickaxe.tscn" type="PackedScene" id=5]
 
-[node name="player" index="0" instance=ExtResource( 1 )]
+[node name="player" instance=ExtResource( 1 )]
 
 script = ExtResource( 2 )
-strength = 2
+strength = 6
 
 [node name="frame" parent="." index="0"]
 
@@ -77,6 +77,8 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
-[node name="pickaxe" parent="moving" index="3" instance=ExtResource( 5 )]
+[node name="item" parent="moving" index="3" instance=ExtResource( 5 )]
+
+_sections_unfolded = [ "Animation", "Transform" ]
 
 

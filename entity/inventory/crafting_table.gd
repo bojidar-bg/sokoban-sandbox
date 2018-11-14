@@ -93,8 +93,14 @@ func _match_recipe():
 	
 	var recipes = {
 		"stone stone | stone stone": "res://entity/inventory/chest.tscn",
-		"log log": "res://entity/inventory/crafting_table.tscn",
-		"log | log": "res://entity/inventory/crafting_table.tscn",
+		"log log | log log": "res://entity/inventory/crafting_table.tscn",
+		"log | log": "res://entity/item/item.tscn",
+		"log log": "res://entity/item/item.tscn",
+		"stone stone stone | _ item _": "res://entity/item/pickaxe.tscn",
+		"_ item _ | stone stone stone": "res://entity/item/pickaxe.tscn",
+		"stone stone stone | _ log _ | _ log _": "res://entity/item/pickaxe.tscn",
+		"stone _ _ | stone log log | stone _ _": "res://entity/item/pickaxe.tscn",
+		"_ _ stone | log log stone | _ _ stone": "res://entity/item/pickaxe.tscn",
 	}
 	
 	return recipes[recipe_string] if recipe_string in recipes else ""

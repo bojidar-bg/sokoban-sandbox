@@ -8,4 +8,4 @@ func post_move(entity, offset, strength, flags):
 			if leftover_strength >= 0:
 				strength = leftover_strength
 				previous_entity.move(offset, strength, entity.MOVE_SELF)
-	return .pre_move(entity, offset, strength, flags)
+	return strength
