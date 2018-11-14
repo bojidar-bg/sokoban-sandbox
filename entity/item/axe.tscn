@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://entity/item/item.tscn" type="PackedScene" id=1]
+
+[node name="axe" instance=ExtResource( 1 )]
+
+item_scene = "res://player/item/axe.tscn"
+
+[node name="tool" parent="moving" index="0"]
+
+frame = 2
+
+

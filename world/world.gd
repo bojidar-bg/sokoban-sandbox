@@ -18,7 +18,7 @@ func _ready():
 	for option in options:
 		total_weight += options[option]
 	
-	var tree = load("res://entity/resource/log.tscn")
+	var tree = load("res://entity/resource/tree.tscn")
 	var rock = load("res://entity/resource/stone.tscn")
 	var things = {}
 	
@@ -52,6 +52,7 @@ func _ready():
 	things.erase(Vector2(1, 0))
 	things.erase(Vector2(-1, 0))
 	things[Vector2(2, 0)] = load("res://entity/inventory/crafting_table.tscn")
+	things[Vector2(-1, 0)] = load("res://entity/item/axe.tscn")
 	
 	for pos in things:
 		var thing = things[pos].instance()

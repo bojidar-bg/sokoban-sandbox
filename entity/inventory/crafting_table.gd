@@ -96,11 +96,24 @@ func _match_recipe():
 		"log log | log log": "res://entity/inventory/crafting_table.tscn",
 		"log | log": "res://entity/item/item.tscn",
 		"log log": "res://entity/item/item.tscn",
+		
 		"stone stone stone | _ item _": "res://entity/item/pickaxe.tscn",
 		"_ item _ | stone stone stone": "res://entity/item/pickaxe.tscn",
+		"stone _ | stone item | stone _": "res://entity/item/pickaxe.tscn",
+		"_ stone | item stone | _ stone": "res://entity/item/pickaxe.tscn",
 		"stone stone stone | _ log _ | _ log _": "res://entity/item/pickaxe.tscn",
+		"_ log _ | _ log _ | stone stone stone": "res://entity/item/pickaxe.tscn",
 		"stone _ _ | stone log log | stone _ _": "res://entity/item/pickaxe.tscn",
 		"_ _ stone | log log stone | _ _ stone": "res://entity/item/pickaxe.tscn",
+		
+		"stone stone | stone item": "res://entity/item/axe.tscn",
+		"stone stone | item stone": "res://entity/item/axe.tscn",
+		"item stone |  stone stone": "res://entity/item/axe.tscn",
+		"stone item |  stone stone": "res://entity/item/axe.tscn",
+		"stone stone | stone log | _ log": "res://entity/item/axe.tscn",
+		"_ log | stone log | stone stone": "res://entity/item/axe.tscn",
+		"stone stone _ | stone log log": "res://entity/item/axe.tscn",
+		"_ stone stone | log log stone": "res://entity/item/axe.tscn",
 	}
 	
 	return recipes[recipe_string] if recipe_string in recipes else ""

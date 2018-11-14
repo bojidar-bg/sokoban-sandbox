@@ -45,7 +45,10 @@ func move(offset, strength = mass, flags = MOVE_DEFAULT): # -> bool (could move)
 	
 	var next_entity = get_parent().get_entity_at_position(get_grid_position() + offset)
 	if next_entity != null:
-		strength = next_entity.move(offset, strength, flags & (~MOVE_SELF))
+		if flags & MOVE_SELF:
+			strength = next_entity.move(offset, strength, flags & (MOVE_PUSH | MOVE_ENTER | MOVE_INTERACT))
+		else:
+			strength = next_entity.move(offset, strength, flags & (MOVE_PUSH | MOVE_ENTER))
 		if strength < 0: return strength
 	
 	# Yay, we actually can do this!
